@@ -1,0 +1,140 @@
+/* Mailer coded by Angela Lopez Mendoza */
+
+/* Amplify Params - DO NOT EDIT
+	ENV
+	REGION
+	API_AIXKARE_GRAPHQLAPIIDOUTPUT
+	API_AIXKARE_GRAPHQLAPIENDPOINTOUTPUT
+	API_AIXKARE_GRAPHQLAPIKEYOUTPUT
+	production
+Amplify Params - DO NOT EDIT */
+const aws = require('aws-sdk');
+const nodemailer = require('nodemailer');
+const express = require('express')
+const cors = require('cors');
+const bodyParser = require('body-parser')
+const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+aws.config.update({region: 'us-east-1'});
+
+ const transporter = nodemailer.createTransport({
+    SES: new aws.SES({
+      apiVersion: '2010-12-01',
+      accessKeyId: 'AKIAYNILMO2LZXU76GNA',
+      accessSecretKey: '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',
+      region: "us-east-1"
+    }), 
+    sendingRate: 1
+ });
+ 
+const app = express();
+app.use(awsServerlessExpressMiddleware.eventContext());
+app.use( cors({ origin: "*", methods: "GET, POST, OPTIONS", headers: "Accept, Content-Type" }) );
+app.use(bodyParser.json());
+
+app.get('/*', function(req, res) {
+  const currentDate = new Date();
+  if(req.method == 'OPTIONS') {
+    console.log('Received an OPTIONS at GET, request on ', req.url, ' at: ', currentDate);
+    res.sendStatus(200);
+  } else if(req.method == 'GET') {
+    const email = req.query.email;
+    const comment = req.query.comment;
+    if(typeof email != 'undefined' && email != null ) {
+      var ok = true;
+      var bodyMail = 'Hemos recibido un comentario!!, de: '+email+'\n'+'Commentario: '+comment+'\n';
+
+      var mailOptions = {
+        from: 'mailer@artecnologia.aixkare.com',
+        to: 'angela.l.m@aixkare.com',
+        subject: 'Comment from Artecnologia by Artecnologia-Mailer',
+        text: bodyMail
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if(err) {
+          console.log("Error at sendmail(get): ",err);
+          ok = false;
+        } 
+        if(info) {
+          console.log("Ok at sendmail(get): envelope: ",info.envelope);
+          console.log("Ok at sendmail(get): messageId: ",info.messageId);
+          ok = true;
+        }
+      });
+
+      if(ok === true) {
+        console.log('OK Message queued to be sent successfully!');
+        console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
+        res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+      } else {
+        console.log('ERROR Message could not be queued to be sent!!!');
+        console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
+        res.redirect("https://www.artecnologia.aixkare.com/index.html");
+      }
+    } else {
+      console.log('WARNING Mail from Message not present in method GET, Mail did not tried to be sent');
+      res.sendStatus(200);
+    }
+  }
+});
+
+app.post('/*', function(req, res) {
+  const currentDate = new Date();
+  if(req.method == 'OPTIONS') {
+    console.log('Received an OPTIONS at POST, request on ', req.url, ' at: ', currentDate);
+    res.sendStatus(200);
+  } else if(req.method == 'POST') {
+    const email = req.body.email;
+    const comment = req.body.comment;
+    if(typeof email != 'undefined' && email != null ) {
+      var ok = true;
+      var bodyMail = 'Hemos recibido un comentario!!, de: '+email+'\n'+'Commentario: '+comment+'\n';
+
+      var mailOptions = {
+        from: 'mailer@artecnologia.aixkare.com',
+        to: 'angela.l.m@aixkare.com',
+        subject: 'Comment from Artecnologia by Artecnologia-Mailer',
+        text: bodyMail
+      };
+
+      transporter.sendMail(mailOptions, (err, info) => {
+        if(err) {
+          console.log("Error at sendmail(post): ",err);
+          ok = false;
+        } 
+        if(info) {
+          console.log("Ok at sendmail(post): envelope: ",info.envelope);
+          console.log("Ok at sendmail(post): messageId: ",info.messageId);
+          ok = true;
+        }
+      });
+
+      if(ok === true) {
+        console.log('OK Message queued to be sent successfully!');
+        //res.json({success: 'OK post /* call succeed, Message queued to be sent successfully!', url: req.url});
+        console.log('OK post /* call succeed, Message queued to be sent successfully!: <'+email+'><'+comment+'>');
+        res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+      } else {
+        console.log('ERROR Message could not be queued to be sent!!!');
+        //res.json({success: 'ERROR post /* call, Message could not be queued to be sent!!!', url: req.url});
+        console.log('ERROR post /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
+        res.redirect("https://www.artecnologia.aixkare.com/index.html");
+      }
+    } else {
+      console.log('WARNING Mail from Message not present in method POST, Mail did not tried to be sent');
+      res.sendStatus(200);
+    }
+  }
+});
+
+process.on('exit', () => {
+  const currentDate = new Date();
+  console.log('...AixKare Mailer App v"+"21112023_1050"+" is being stopped, at: ', currentDate, ".");
+ });
+
+app.listen(3000, function() {
+    const currentDate = new Date();
+    console.log("AixKare Mailer App v"+"21112023_1050"+" started, at: ", currentDate, "...");
+});
+
+module.exports = app
