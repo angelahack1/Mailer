@@ -25,6 +25,7 @@ try {
   credArray = data.split(',');
 } catch (err) {
   credArray = null;
+  const currentDate = new Date();
   console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"23112023_1210"+" is being stopped, at: ", currentDate, ".");
   process.exit(-1);
 }
