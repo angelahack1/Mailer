@@ -1,4 +1,5 @@
-/* Mailer coded by Angela Lopez Mendoza */
+/* Mailer coded by Angela Lopez Mendoza (angelahack1) */
+/* Last modification date: Nov/2023 */
 
 /* Amplify Params - DO NOT EDIT
 	ENV
@@ -14,17 +15,29 @@ const express = require('express')
 const cors = require('cors');
 const bodyParser = require('body-parser')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const fs = require('fs');
+var credArray = [];
+
 aws.config.update({region: 'us-east-1'});
 
- const transporter = nodemailer.createTransport({
-    SES: new aws.SES({
-      apiVersion: '2010-12-01',
-      accessKeyId: 'AKIAYNILMO2LZXU76GNA',
-      accessSecretKey: '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',
-      region: "us-east-1"
+try {
+  const data = fs.readFileSync('./credentials.dat', 'utf8');
+  credArray = data.split(',');
+} catch (err) {
+  credArray = null;
+  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"23112023_1210"+" is being stopped, at: ", currentDate, ".");
+  process.exit(-1);
+}
+
+const transporter = nodemailer.createTransport({
+  SES: new aws.SES({
+    apiVersion: '2010-12-01',
+    accessKeyId: credArray[0],
+    accessSecretKey: credArray[1],
+    region: "us-east-1"
     }), 
     sendingRate: 1
- });
+});
  
 const app = express();
 app.use(awsServerlessExpressMiddleware.eventContext());
@@ -116,7 +129,6 @@ app.post('/*', function(req, res) {
         res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
       } else {
         console.log('ERROR Message could not be queued to be sent!!!');
-        //res.json({success: 'ERROR post /* call, Message could not be queued to be sent!!!', url: req.url});
         console.log('ERROR post /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
         res.redirect("https://www.artecnologia.aixkare.com/index.html");
       }
@@ -129,12 +141,12 @@ app.post('/*', function(req, res) {
 
 process.on('exit', () => {
   const currentDate = new Date();
-  console.log('...AixKare Mailer App v"+"21112023_1050"+" is being stopped, at: ', currentDate, ".");
+  console.log("...AixKare Mailer App v"+"23112023_1210"+" is being stopped, at: ", currentDate, ".");
  });
 
 app.listen(3000, function() {
     const currentDate = new Date();
-    console.log("AixKare Mailer App v"+"21112023_1050"+" started, at: ", currentDate, "...");
+    console.log("AixKare Mailer App v"+"23112023_1210"+" started, at: ", currentDate, "...");
 });
 
 module.exports = app

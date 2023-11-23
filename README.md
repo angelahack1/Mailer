@@ -1,5 +1,5 @@
 # Mailer
-A Mailer based on AWS API Gateway for AixKare WebSites.
+A Mailer Lambda Function based on AWS API Gateway for AixKare WebSites.
 
 ## This is an application api for Amazon API Gateway, and is publicly available for my courses at Udemy in the near future.
 
