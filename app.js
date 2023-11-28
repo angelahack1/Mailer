@@ -26,7 +26,7 @@ try {
 } catch (err) {
   credArray = null;
   const currentDate = new Date();
-  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"23112023_1210"+" is being stopped, at: ", currentDate, ".");
+  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"27112023_2000"+" is being stopped, at: ", currentDate, ".");
   process.exit(-1);
 }
 
@@ -142,12 +142,12 @@ app.post('/*', function(req, res) {
 
 process.on('exit', () => {
   const currentDate = new Date();
-  console.log("...AixKare Mailer App v"+"23112023_1210"+" is being stopped, at: ", currentDate, ".");
+  console.log("...AixKare Mailer App v"+"27112023_2000"+" is being stopped, at: ", currentDate, ".");
  });
 
 app.listen(3000, function() {
     const currentDate = new Date();
-    console.log("AixKare Mailer App v"+"23112023_1210"+" started, at: ", currentDate, "...");
+    console.log("AixKare Mailer App v"+"27112023_2000"+" started, at: ", currentDate, "...");
 });
 
 module.exports = app
