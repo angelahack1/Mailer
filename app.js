@@ -53,16 +53,27 @@ app.get('/*', function(req, res) {
   } else if(req.method == 'GET') {
     const email = req.query.email;
     const comment = req.query.comment;
+    var bodyMail = "";
+    var mailOptions = {};
+    var ok = true;
     if(typeof email != 'undefined' && email != null ) {
-      var ok = true;
-      var bodyMail = 'Hemos recibido un comentario!!, de: '+email+'\n'+'Commentario: '+comment+'\n';
-
-      var mailOptions = {
+      if(req.url.indexOf("aixkare") > -1) {
+        bodyMail = 'We have received a comment!!, from: '+email+'\n'+'Commentary: '+comment+'\n';
+        mailOptions = {
+          from: 'mailer@aixkare.com',
+          to: 'angela.l.m@aixkare.com',
+          subject: 'Comment from AixKare from AixKare-Mailer',
+          text: bodyMail
+        };
+    } else {
+      bodyMail = 'Hemos recibido un comentario!!, de: '+email+'\n'+'Comentario: '+comment+'\n';
+      mailOptions = {
         from: 'mailer@artecnologia.aixkare.com',
         to: 'angela.l.m@aixkare.com',
         subject: 'Comment from Artecnologia by Artecnologia-Mailer',
         text: bodyMail
       };
+    }
 
       transporter.sendMail(mailOptions, (err, info) => {
         if(err) {
