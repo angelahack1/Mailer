@@ -26,7 +26,7 @@ try {
 } catch (err) {
   credArray = null;
   const currentDate = new Date();
-  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"02122023_1735"+" is being stopped, at: ", currentDate, ".");
+  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"02122023_1815"+" is being stopped, at: ", currentDate, ".");
   process.exit(-1);
 }
 
@@ -56,8 +56,10 @@ app.get('/*', function(req, res) {
     var bodyMail = "";
     var mailOptions = {};
     var ok = true;
+    var aixkare = false;
     if(typeof email != 'undefined' && email != null ) {
       if(req.url.indexOf("aixkare") > -1) {
+        aixkare= true;
         bodyMail = 'We have received a comment!!, from: '+email+'\n'+'Commentary: '+comment+'\n';
         mailOptions = {
           from: 'mailer@aixkare.com',
@@ -88,13 +90,25 @@ app.get('/*', function(req, res) {
       });
 
       if(ok === true) {
-        console.log('OK Message queued to be sent successfully!');
-        console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
-        res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+        if(!aixkare) {
+          console.log('OK Message queued from Artecnologia to be sent successfully!');
+          console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
+          res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+        } else {
+          console.log('OK Message queued from AixKare to be sent successfully!');
+          console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
+          res.redirect("https://www.aixkare.com/thanks.html");
+        }
       } else {
-        console.log('ERROR Message could not be queued to be sent!!!');
-        console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
-        res.redirect("https://www.artecnologia.aixkare.com/index.html");
+        if(!aixkare) {
+          console.log('ERROR Message from Artecnologia could not be queued to be sent!!!');
+          console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
+          res.redirect("https://www.artecnologia.aixkare.com/index.html");
+        } else {
+          console.log('ERROR Message from AixKare could not be queued to be sent!!!');
+          console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
+          res.redirect("https://www.aixkare.com/index.html");
+        }
       }
     } else {
       console.log('WARNING Mail from Message not present in method GET, Mail did not tried to be sent');
@@ -109,18 +123,31 @@ app.post('/*', function(req, res) {
     console.log('Received an OPTIONS at POST, request on ', req.url, ' at: ', currentDate);
     res.sendStatus(200);
   } else if(req.method == 'POST') {
-    const email = req.body.email;
-    const comment = req.body.comment;
+    const email = req.query.email;
+    const comment = req.query.comment;
+    var bodyMail = "";
+    var mailOptions = {};
+    var ok = true;
+    var aixkare = false;
     if(typeof email != 'undefined' && email != null ) {
-      var ok = true;
-      var bodyMail = 'Hemos recibido un comentario!!, de: '+email+'\n'+'Commentario: '+comment+'\n';
-
-      var mailOptions = {
+      if(req.url.indexOf("aixkare") > -1) {
+        aixkare= true;
+        bodyMail = 'We have received a comment!!, from: '+email+'\n'+'Commentary: '+comment+'\n';
+        mailOptions = {
+          from: 'mailer@aixkare.com',
+          to: 'angela.l.m@aixkare.com',
+          subject: 'Comment from AixKare from AixKare-Mailer',
+          text: bodyMail
+        };
+    } else {
+      bodyMail = 'Hemos recibido un comentario!!, de: '+email+'\n'+'Comentario: '+comment+'\n';
+      mailOptions = {
         from: 'mailer@artecnologia.aixkare.com',
         to: 'angela.l.m@aixkare.com',
         subject: 'Comment from Artecnologia by Artecnologia-Mailer',
         text: bodyMail
       };
+    }
 
       transporter.sendMail(mailOptions, (err, info) => {
         if(err) {
@@ -135,14 +162,25 @@ app.post('/*', function(req, res) {
       });
 
       if(ok === true) {
-        console.log('OK Message queued to be sent successfully!');
-        //res.json({success: 'OK post /* call succeed, Message queued to be sent successfully!', url: req.url});
-        console.log('OK post /* call succeed, Message queued to be sent successfully!: <'+email+'><'+comment+'>');
-        res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+        if(!aixkare) {
+          console.log('OK Message queued from Artecnologia to be sent successfully!');
+          console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
+          res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+        } else {
+          console.log('OK Message queued from AixKare to be sent successfully!');
+          console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
+          res.redirect("https://www.aixkare.com/thanks.html");
+        }
       } else {
-        console.log('ERROR Message could not be queued to be sent!!!');
-        console.log('ERROR post /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
-        res.redirect("https://www.artecnologia.aixkare.com/index.html");
+        if(!aixkare) {
+          console.log('ERROR Message from Artecnologia could not be queued to be sent!!!');
+          console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
+          res.redirect("https://www.artecnologia.aixkare.com/index.html");
+        } else {
+          console.log('ERROR Message from AixKare could not be queued to be sent!!!');
+          console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
+          res.redirect("https://www.aixkare.com/index.html");
+        }
       }
     } else {
       console.log('WARNING Mail from Message not present in method POST, Mail did not tried to be sent');
@@ -153,12 +191,12 @@ app.post('/*', function(req, res) {
 
 process.on('exit', () => {
   const currentDate = new Date();
-  console.log("...AixKare Mailer App v"+"02122023_1735"+" is being stopped, at: ", currentDate, ".");
+  console.log("...AixKare Mailer App v"+"02122023_1815"+" is being stopped, at: ", currentDate, ".");
  });
 
 app.listen(3000, function() {
     const currentDate = new Date();
-    console.log("AixKare Mailer App v"+"02122023_1735"+" started, at: ", currentDate, "...");
+    console.log("AixKare Mailer App v"+"02122023_1815"+" started, at: ", currentDate, "...");
 });
 
 module.exports = app
