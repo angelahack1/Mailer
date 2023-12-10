@@ -26,7 +26,7 @@ try {
 } catch (err) {
   credArray = null;
   const currentDate = new Date();
-  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"02122023_1815"+" is being stopped, at: ", currentDate, ".");
+  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"02122023_1845"+" is being stopped, at: ", currentDate, ".");
   process.exit(-1);
 }
 
@@ -53,13 +53,14 @@ app.get('/*', function(req, res) {
   } else if(req.method == 'GET') {
     const email = req.query.email;
     const comment = req.query.comment;
+    const lang = req.query.lang;
     var bodyMail = "";
     var mailOptions = {};
     var ok = true;
     var aixkare = false;
     if(typeof email != 'undefined' && email != null ) {
       if(req.url.indexOf("aixkare") > -1) {
-        aixkare= true;
+        aixkare = true;
         bodyMail = 'We have received a comment!!, from: '+email+'\n'+'Commentary: '+comment+'\n';
         mailOptions = {
           from: 'mailer@aixkare.com',
@@ -93,21 +94,54 @@ app.get('/*', function(req, res) {
         if(!aixkare) {
           console.log('OK Message queued from Artecnologia to be sent successfully!');
           console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
-          res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+          if(lang == 'en') {
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=pt");
+          } else{
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=en");
+          }
         } else {
           console.log('OK Message queued from AixKare to be sent successfully!');
           console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
-          res.redirect("https://www.aixkare.com/thanks.html");
+          if(lang == 'en') {
+            res.redirect("https://www.aixkare.com/thanks.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.aixkare.com/thanks.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.aixkare.com/thanks.html?lang=pt");
+          } else{
+            res.redirect("https://www.aixkare.com/thanks.html?lang=en");
+          }
         }
       } else {
         if(!aixkare) {
           console.log('ERROR Message from Artecnologia could not be queued to be sent!!!');
           console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
-          res.redirect("https://www.artecnologia.aixkare.com/index.html");
+          if(lang == 'en') {
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=pt");
+          } else{
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=en");
+          }
         } else {
           console.log('ERROR Message from AixKare could not be queued to be sent!!!');
           console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
           res.redirect("https://www.aixkare.com/index.html");
+          if(lang == 'en') {
+            res.redirect("https://www.aixkare.com/index.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.aixkare.com/index.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.aixkare.com/index.html?lang=pt");
+          } else{
+            res.redirect("https://www.aixkare.com/index.html?lang=en");
+          }
         }
       }
     } else {
@@ -125,6 +159,7 @@ app.post('/*', function(req, res) {
   } else if(req.method == 'POST') {
     const email = req.query.email;
     const comment = req.query.comment;
+    const lang = req.query.lang;
     var bodyMail = "";
     var mailOptions = {};
     var ok = true;
@@ -165,21 +200,54 @@ app.post('/*', function(req, res) {
         if(!aixkare) {
           console.log('OK Message queued from Artecnologia to be sent successfully!');
           console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
-          res.redirect("https://www.artecnologia.aixkare.com/thanks.html");
+          if(lang == 'en') {
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=pt");
+          } else{
+            res.redirect("https://www.artecnologia.aixkare.com/thanks.html?lang=en");
+          }
         } else {
           console.log('OK Message queued from AixKare to be sent successfully!');
           console.log('OK get /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
-          res.redirect("https://www.aixkare.com/thanks.html");
+          if(lang == 'en') {
+            res.redirect("https://www.aixkare.com/thanks.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.aixkare.com/thanks.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.aixkare.com/thanks.html?lang=pt");
+          } else{
+            res.redirect("https://www.aixkare.com/thanks.html?lang=en");
+          }
         }
       } else {
         if(!aixkare) {
           console.log('ERROR Message from Artecnologia could not be queued to be sent!!!');
           console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
-          res.redirect("https://www.artecnologia.aixkare.com/index.html");
+          if(lang == 'en') {
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=pt");
+          } else{
+            res.redirect("https://www.artecnologia.aixkare.com/index.html?lang=en");
+          }
         } else {
           console.log('ERROR Message from AixKare could not be queued to be sent!!!');
           console.log('ERROR get /* call, could not be queued to be sent!!!: query: [ ',req.query,' ],[ ',email+'>,<'+comment+'>',' ] url: '+req.url);
           res.redirect("https://www.aixkare.com/index.html");
+          if(lang == 'en') {
+            res.redirect("https://www.aixkare.com/index.html?lang=en");
+          } else if(lang == 'es') {
+            res.redirect("https://www.aixkare.com/index.html?lang=es");
+          } else if(lang == 'pt') {
+            res.redirect("https://www.aixkare.com/index.html?lang=pt");
+          } else{
+            res.redirect("https://www.aixkare.com/index.html?lang=en");
+          }
         }
       }
     } else {
@@ -191,12 +259,12 @@ app.post('/*', function(req, res) {
 
 process.on('exit', () => {
   const currentDate = new Date();
-  console.log("...AixKare Mailer App v"+"02122023_1815"+" is being stopped, at: ", currentDate, ".");
+  console.log("...AixKare Mailer App v"+"02122023_1845"+" is being stopped, at: ", currentDate, ".");
  });
 
 app.listen(3000, function() {
     const currentDate = new Date();
-    console.log("AixKare Mailer App v"+"02122023_1815"+" started, at: ", currentDate, "...");
+    console.log("AixKare Mailer App v"+"02122023_1845"+" started, at: ", currentDate, "...");
 });
 
 module.exports = app
