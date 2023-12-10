@@ -51,6 +51,9 @@ app.get('/*', function(req, res) {
     console.log('Received an OPTIONS at GET, request on ', req.url, ' at: ', currentDate);
     res.sendStatus(200);
   } else if(req.method == 'GET') {
+    console.log(">>>>>>>>>>>>Request(GET): {");
+    console.log(req);
+    console.log("}>>>>>>>>>>>>");
     const email = req.query.email;
     const comment = req.query.comment;
     const lang = req.query.lang;
@@ -157,9 +160,12 @@ app.post('/*', function(req, res) {
     console.log('Received an OPTIONS at POST, request on ', req.url, ' at: ', currentDate);
     res.sendStatus(200);
   } else if(req.method == 'POST') {
-    const email = req.query.email;
-    const comment = req.query.comment;
-    const lang = req.query.lang;
+    console.log(">>>>>>>>>>>>Request (POST): {");
+    console.log(req);
+    console.log("}>>>>>>>>>>>>");
+    const email = req.body.email;
+    const comment = req.body.comment;
+    const lang = req.body.lang;
     var bodyMail = "";
     var mailOptions = {};
     var ok = true;
