@@ -52,11 +52,11 @@ app.get('/*', function(req, res) {
     res.sendStatus(200);
   } else if(req.method == 'GET') {
     console.log(">>>>>>>>>>>>Request(GET): {");
-    console.log(req.apiGateway);
+    console.log(req.query);
     console.log("}>>>>>>>>>>>>");
-    const email = req.apiGateway.event.email;
-    const comment = req.apiGateway.event.comment;
-    const lang = req.apiGateway.event.lang;
+    const email = req.query.email;
+    const comment = req.query.comment;
+    const lang = req.query.lang;
     var bodyMail = "";
     var mailOptions = {};
     var ok = true;
