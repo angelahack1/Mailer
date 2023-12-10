@@ -26,7 +26,7 @@ try {
 } catch (err) {
   credArray = null;
   const currentDate = new Date();
-  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"10122023_1629"+" is being stopped, at: ", currentDate, ".");
+  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"10122023_1701"+" is being stopped, at: ", currentDate, ".");
   process.exit(-1);
 }
 
@@ -52,6 +52,8 @@ app.get('/*', function(req, res) {
     res.sendStatus(200);
   } else if(req.method == 'GET') {
     console.log(">>>>>>>>>>>>Request(GET): {");
+    console.log(req);
+    console.log(">>>>>>>>>>>>QueryString(GET): {");
     console.log(req.query);
     console.log("}>>>>>>>>>>>>");
     const email = req.query.email;
@@ -265,12 +267,12 @@ app.post('/*', function(req, res) {
 
 process.on('exit', () => {
   const currentDate = new Date();
-  console.log("...AixKare Mailer App v"+"10122023_1629"+" is being stopped, at: ", currentDate, ".");
+  console.log("...AixKare Mailer App v"+"10122023_1701"+" is being stopped, at: ", currentDate, ".");
  });
 
 app.listen(3000, function() {
     const currentDate = new Date();
-    console.log("AixKare Mailer App v"+"10122023_1629"+" started, at: ", currentDate, "...");
+    console.log("AixKare Mailer App v"+"10122023_1701"+" started, at: ", currentDate, "...");
 });
 
 module.exports = app
