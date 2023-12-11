@@ -59,7 +59,7 @@ app.get('/*', function(req, res) {
     const email = req.query.email;
     const comment = req.query.comment;
     const lang = req.query.lang;
-    const from = req.query.from;
+    var from = req.query.from;
     var bodyMail = "";
     var mailOptions = {};
     var ok = true;
@@ -180,7 +180,7 @@ app.post('/*', function(req, res) {
     const email = req.body.email;
     const comment = req.body.comment;
     const lang = req.body.lang;
-    const from = req.body.from;
+    var from = req.body.from;
     var bodyMail = "";
     var mailOptions = {};
     var ok = true;
