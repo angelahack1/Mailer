@@ -28,7 +28,7 @@ try {
 } catch (err) {
   credArray = null;
   const currentDate = new Date();
-  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"31052024_1720"+" is being stopped, at: ", currentDate, ".");
+  console.error("ERROR at Startup (loading creds) ...AixKare Mailer App v"+"03062024_1312"+" is being stopped, at: ", currentDate, ".");
   process.exit(-1);
 }
 
@@ -145,7 +145,7 @@ app.get('/*', function(req, res) {
         }
       } else if(from.indexOf("ayaspa") > -1) {
         console.log('GET /* On A&A Spa, Message queued to sent successfully!: <'+email+'><'+comment+'>');
-        res.redirect("https://www.ayaspa.aixkare.com/gracias.html");
+        res.redirect("https://ayaspa.aixkare.com/gracias.html");
       } else {
         console.log('ERROR Message queued but from is incorrect...!: <'+email+'><'+comment+'>');
         res.redirect("https://www.aixkare.com/index.html");
@@ -254,7 +254,7 @@ app.post('/*', function(req, res) {
           }
         } else if(from.indexOf("ayaspa") > -1) {
           console.log('OK POST /* A&A Spa, Message queued to sent successfully!: <'+email+'><'+comment+'>');
-            res.redirect("https://www.ayaspa.aixkare.com/gracias.html");
+            res.redirect("https://ayaspa.aixkare.com/gracias.html");
         } else {
           console.log('ERROR Message queued but from is incorrect...!');
           console.log('ERROR post /* call succeed, Message queued to sent successfully!: <'+email+'><'+comment+'>');
@@ -269,12 +269,12 @@ app.post('/*', function(req, res) {
 
 process.on('exit', () => {
   const currentDate = new Date();
-  console.log("...AixKare Mailer App v"+"31052024_1720"+" is being stopped, at: ", currentDate, ".");
+  console.log("...AixKare Mailer App v"+"03062024_1312"+" is being stopped, at: ", currentDate, ".");
  });
 
 app.listen(3000, function() {
     const currentDate = new Date();
-    console.log("AixKare Mailer App v"+"31052024_1720"+" started, at: ", currentDate, "...");
+    console.log("AixKare Mailer App v"+"03062024_1312"+" started, at: ", currentDate, "...");
 });
 
 module.exports = app
